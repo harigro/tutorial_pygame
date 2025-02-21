@@ -103,7 +103,7 @@ def main():
         # Gambar ulang layar
         screen.fill(BACKGROUND_COLOR)
         box.draw(screen)
-        clock.tick(30)
+        clock.tick(FPS)
         pygame.display.update()
 
     # Keluar dari game
