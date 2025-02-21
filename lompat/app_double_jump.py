@@ -20,6 +20,10 @@ JUMP_STRENGTH = 20  # Kekuatan lompatan
 MAX_JUMPS = 2  # Jumlah lompatan maksimal
 FRICTION = 0.3  # Gesekan untuk memperhalus pergerakan
 
+# FPS
+FPS = 60
+clock = pygame.time.Clock()
+
 
 class Box:
     """Kelas untuk merepresentasikan kotak yang bisa bergerak, melompat, dan memiliki gesekan."""
@@ -69,36 +73,41 @@ class Box:
         pygame.draw.rect(surface, BOX_COLOR, self.rect)
 
 
-# Buat objek kotak
-box = Box((WIDTH - BOX_SIZE) // 2, FLOOR_Y, BOX_SIZE)
+def main():
+    # Buat objek kotak
+    box = Box((WIDTH - BOX_SIZE) // 2, FLOOR_Y, BOX_SIZE)
 
-# Loop utama
-running = True
-while running:
-    pygame.time.delay(30)  # Tambahkan sedikit jeda untuk mengontrol kecepatan
+    # Loop utama
+    running = True
+    while running:
+        pygame.time.delay(30)  # Tambahkan sedikit jeda untuk mengontrol kecepatan
 
-    # Cek event
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
+        # Cek event
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
 
-    # Ambil input dari keyboard
-    keys = pygame.key.get_pressed()
-    if keys[pygame.K_LEFT]:
-        box.move("left")
-    if keys[pygame.K_RIGHT]:
-        box.move("right")
-    if keys[pygame.K_SPACE]:  # Panggil metode jump() jika tombol spasi ditekan
-        box.jump()
+        # Ambil input dari keyboard
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_LEFT]:
+            box.move("left")
+        if keys[pygame.K_RIGHT]:
+            box.move("right")
+        if keys[pygame.K_SPACE]:  # Panggil metode jump() jika tombol spasi ditekan
+            box.jump()
 
-    # Terapkan gravitasi dan gesekan
-    box.apply_gravity()
-    box.apply_friction()
+        # Terapkan gravitasi dan gesekan
+        box.apply_gravity()
+        box.apply_friction()
 
-    # Gambar ulang layar
-    screen.fill(BACKGROUND_COLOR)
-    box.draw(screen)
-    pygame.display.update()
+        # Gambar ulang layar
+        screen.fill(BACKGROUND_COLOR)
+        box.draw(screen)
+        clock.tick(30)
+        pygame.display.update()
 
-# Keluar dari game
-pygame.quit()
+    # Keluar dari game
+    pygame.quit()
+
+if __name__=="__main__":
+    main()
